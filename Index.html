@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motiva BPSDM Imipas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: linear-gradient(135deg, #0E213D 0%, #1a3a5e 70%, #2c4a7a 100%);
+            --primary-light: linear-gradient(135deg, #D4AF37 0%, #e6bf4a 100%);
+            --primary-dark: #0E213D;
+            --primary-gold: #D4AF37;
+            --navy-blue: #1E3A8A;
+            --success: linear-gradient(135deg, #10b981, #059669);
+            --warning: linear-gradient(135deg, #f59e0b, #d97706);
+            --danger: linear-gradient(135deg, #ef4444, #dc2626);
+            --dark: #000000;
+            --light: #FFFFFF;
+            --gray-100: #f8fafc;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-800: #1e293b;
+            --shadow: 0 20px 25px -5px rgba(14, 33, 61, 0.25), 0 10px 10px -5px rgba(14, 33, 61, 0.15);
+            --shadow-lg: 0 25px 50px -12px rgba(14, 33, 61, 0.35);
+            --shadow-gold: 0 20px 25px -5px rgba(212, 175, 55, 0.35);
+            /* 🔥 WARNA MOTIVA BARU - SOLID GOLDEN + NAVY BLUE GRADIENT */
+            --motiva-gold-navy: linear-gradient(135deg, #D4AF37 0%, #F1C40F 30%, #1E3A8A 70%, #0E213D 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0E213D 0%, #1a3a5e 50%, #2c4a7a 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 🔥 SIDEBAR - LEBIH LEBAR & TERATUR */
+        .sidebar {
+            width: 95px; /* 🔥 LEBIH LEBAR DARI 85px - BIAR MUAT TEXT */
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
+            padding: 0;
+            position: fixed;
+            height: 100vh;
+            z-index: 1002;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.expanded {
+            width: 340px; /* 🔥 LEBIH LEBAR SEDIKIT */
+            padding: 1rem 0;
+        }
+
+        /* 🔥 HEADER SECTION - LOGO + HAMBURGER BERSAMAAN */
+        .sidebar-header {
+            height: 90px; /* 🔥 LEBIH PENDEK - BIKIN TEXT NAIK */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1rem 0.25rem; /* 🔥 LEBIH SEMPIT VERTIKAL */
+            border-bottom: 1px solid rgba(14, 33, 61, 0.1);
+            margin-bottom: 0.125rem; /* 🔥 JAUH LEBIH DEKAT KE BAWAH - HANYA 2px */
+            position: relative;
+            transition: all 0.4s;
+            overflow: visible;
+        }
+
+        .sidebar.expanded .sidebar-header {
+            height: 105px; /* 🔥 LEBIH PENDEK */
+            padding: 0.75rem 1.75rem 0.25rem;
+        }
+
+        /* 🔥 LOGO CONTAINER - FLEX ROW SEJAJAR - LOGO & MOTIVA */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem; /* 🔥 LEBIH DEKAT */
+            width: 100%;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.4s 0.1s;
+        }
+
+        .sidebar.expanded .logo-container {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* 🔥 LOGO IMAGE */
+        .logo-img {
+            width: 52px; /* 🔥 LEBIH KECIL SEDIKIT */
+            height: 52px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            opacity: 0;
+            transition: all 0.4s 0.1s;
+            object-fit: contain;
+        }
+
+        .sidebar.expanded .logo-img {
+            opacity: 1;
+        }
+
+        .logo-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.05rem; /* 🔥 SUPER DEKAT - HANYA 0.8px */
+            flex: 1;
+        }
+
+        /* 🔥 MOTIVA - GOLD + NAVY BLUE GRADIENT BARU */
+        .logo h1 {
+            font-family: 'Cinzel', serif;
+            background: var(--motiva-gold-navy); /* 🔥 WARNA BARU - GOLDEN + NAVY BLUE */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.75rem; /* 🔥 LEBIH BESAR */
+            font-weight: 700;
+            line-height: 1.1; /* 🔥 LEBIH PADAT */
+            letter-spacing: -0.4px;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.4s 0.2s;
+            margin: 0;
+            margin-top: 6px;
+           
+        }
+
+        .sidebar.expanded .logo h1 {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* 🔥 SUBTITLE - MONITORING TUGAS - NAVY BLUE - SUPER DEKAT */
+        .logo-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.80rem; /* 🔥 LEBIH KECIL */
+            font-weight: 800; /* 🔥 LEBIH TEBAL */
+            color: var(--navy-blue);
+            letter-spacing: 0.4px;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.4s 0.3s;
+            margin-top: -14px; /* 🔥 SUPER DEKAT KE MOTIVA - HANYA 0.8px */
+        }
+
+        .sidebar.expanded .logo-subtitle {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* 🔥 GARIS PEMISAH - LEBIH DEKAT KE ATAS */
+        .logo-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--primary-gold) 60%, transparent 100%);
+            margin: 0.25rem 0 0.5rem 0; /* 🔥 LEBIH DEKAT KE ATAS & BAWAH */
+            width: 60%;
+            align-self: center;
+            opacity: 0;
+            transform: scaleX(0);
+            transition: all 0.4s 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border-radius: 1px;
+        }
+
+        .sidebar.expanded .logo-divider {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+
+        /* 🔥 HAMBURGER - LEBIH KE KANAN & ATAS */
+        .sidebar-hamburger {
+            width: 44px;
+            height: 44px;
+            background: rgba(212, 175, 55, 0.15);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: absolute;
+            top: 0.75rem; /* 🔥 LEBIH ATAS */
+            right: 0.75rem; /* 🔥 LEBIH KANAN */
+            z-index: 1003;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+        }
+
+        .sidebar.expanded .sidebar-hamburger {
+            right: 1rem;
+            top: 1rem;
+        }
+
+        .sidebar-hamburger:hover {
+            background: var(--primary-light);
+            border-color: var(--primary-gold);
+            transform: scale(1.05) rotate(90deg);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .sidebar-hamburger i {
+            font-size: 1.15rem;
+            color: var(--primary-gold);
+            transition: all 0.3s;
+        }
+
+        /* Nav Items - LEBIH DEKAT KE ATAS */
+        .nav-items {
+            flex: 1;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.4s 0.2s;
+            padding-top: 0.125rem; /* 🔥 LEBIH DEKAT KE LOGO */
+        }
+
+        .sidebar.expanded .nav-items {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .nav-item {
+            padding: 0.875rem 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 4px solid transparent;
+            color: #64748b;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateX(-20px);
+            margin-bottom: 0.125rem; /* 🔥 SPASI ANTAR BARIS SUPER KECIL */
+            border-radius: 0 12px 12px 0;
+        }
+
+        .sidebar.expanded .nav-item {
+            opacity: 1;
+            transform: translateX(0);
+            padding-left: 2.25rem;
+        }
+
+        .nav-item span {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.4s;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .sidebar.expanded .nav-item span {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: var(--primary-light);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-item:hover::before,
+        .nav-item.active::before {
+            width: 4px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(14, 33, 61, 0.08);
+            border-left-color: var(--primary-gold);
+            color: var(--primary-dark);
+            transform: translateX(8px);
+        }
+
+        .nav-item:hover i,
+        .nav-item.active i {
+            color: var(--primary-gold);
+        }
+
+        /* 🔥 MAIN CONTENT - Disesuaikan dengan sidebar lebih lebar */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 0 0 0 24px;
+            min-height: 100vh;
+            margin-left: 95px; /* 🔥 Disesuaikan dengan sidebar baru */
+        }
+
+        .main-content.sidebar-expanded {
+            margin-left: 340px; /* 🔥 Disesuaikan dengan sidebar expanded */
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Tooltip untuk disposisi */
+        .disposisi-tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            white-space: normal;
+            box-shadow: var(--shadow-lg);
+            z-index: 1005;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            max-width: 280px;
+            min-width: 220px;
+            pointer-events: none;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        .disposisi-tooltip.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 🔥 UPGRADED HEADER */
+        .header {
+            background: var(--light);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(14, 33, 61, 0.1);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--primary);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.25rem;
+            margin-left:0;
+            padding-left:0;
+        }
+
+        .header p {
+            color: #64748b;
+            font-weight: 500;
+            margin: -20px;
+            margin-left:0;
+            padding-left:0;
+            
+        }
+
+        .stats-overview {
+            display: flex;
+            gap: 2rem;
+            background: linear-gradient(135deg, rgba(14, 33, 61, 0.08) 0%, rgba(212, 175, 55, 0.12) 100%);
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(14, 33, 61, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+/* 🔥 OVERALL PROGRESS */
+
+.progress-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+}
+
+.progress-circle {
+    position: relative;
+    width: 180px;
+    height: 180px;
+}
+
+
+.progress-circle svg {
+    transform: rotate(0deg);
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #16a34a;
+}
+
+.progress-completed {
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+        .stat-inline {
+            text-align: center;
+        }
+
+        .stat-inline .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Stats Cards UPGRADE */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(14, 33, 61, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--primary);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--gray-800);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .stat-icon {
+            position: absolute;
+            right: 2rem;
+            top: 2rem;
+            font-size: 3rem;
+            opacity: 0.08;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Task Form */
+        .task-form-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(14, 33, 61, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 1rem;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            border: 2px solid rgba(14, 33, 61, 0.2);
+            border-radius: 16px;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+            background: var(--light);
+            transform: translateY(-2px);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        /* 🔥 DISPOSISI DROPDOWN */
+        .disposisi-dropdown {
+            position: relative;
+        }
+
+        .disposisi-trigger {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            border: 2px solid rgba(14, 33, 61, 0.2);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            font-family: inherit;
+            backdrop-filter: blur(10px);
+        }
+
+        .disposisi-trigger:hover {
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+        }
+
+        .disposisi-trigger.active {
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+        }
+
+        .disposisi-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid var(--primary-gold);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+        }
+
+        .disposisi-list.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .disposisi-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(14, 33, 61, 0.1);
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .disposisi-item:hover {
+            background: rgba(212, 175, 55, 0.15);
+            padding-left: 2.5rem;
+        }
+
+        .disposisi-item:last-child {
+            border-bottom: none;
+        }
+
+        .disposisi-checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-gold);
+            flex-shrink: 0;
+        }
+
+        .disposisi-selected {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-style: italic;
+        }
+
+        .btn {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 1.25rem 2.5rem;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: var(--shadow-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            color: var(--light);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* VIEW TOGGLE */
+        .view-toggle {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: flex-end;
+        }
+
+        .view-btn {
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(14, 33, 61, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .view-btn:hover, .view-btn.active {
+            background: var(--primary-gold);
+            color: var(--primary-dark);
+            border-color: var(--primary-gold);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        /* LINK STYLING */
+        .task-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .task-link:hover {
+            
+            color: #2563eb;
+            transform: translateY(-2px);
+            
+        }
+
+        .no-link {
+            color: #64748b;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+
+        /* GRID VIEW */
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .task-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 1.25rem;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top: 4px solid var(--primary-gold);
+            position: relative;
+            border: 1px solid rgba(14, 33, 61, 0.1);
+            backdrop-filter: blur(10px);
+            height: 280px;
+            overflow: visible;
+            cursor: pointer;
+        }
+
+        .task-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .task-card.segera {
+            border-top-color: var(--warning);
+        }
+
+        .task-card.sangat-segera {
+            border-top-color: var(--danger);
+        }
+
+        .task-card.completed {
+            border-top-color: #10b981;
+            opacity: 0.85;
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .task-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .task-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-biasa {
+            background: rgba(14, 33, 61, 0.15);
+            color: var(--primary-dark);
+        }
+
+        .badge-segera {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+
+        .badge-sangat-segera {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+
+        .task-meta {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.8rem;
+            color: var(--gray-800);
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .disposisi-meta {
+            position: relative;
+            cursor: pointer;
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .task-description {
+            color: var(--gray-800);
+            line-height: 1.4;
+            font-size: 0.85rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .task-actions {
+            position: absolute;
+            bottom: 1rem;
+            left: 1.25rem;
+            right: 1.25rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* LIST VIEW */
+        .tasks-list {
+            display: none;
+        }
+
+        .tasks-list.active {
+            display: block;
+        }
+
+        .task-list-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.25rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            border-top: 4px solid var(--primary-gold);
+            transition: all 0.3s;
+            border: 1px solid rgba(14, 33, 61, 0.1);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            position: relative;
+            overflow: visible;
+        }
+
+        .task-list-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+
+        .task-list-item.segera {
+            border-top-color: var(--warning);
+        }
+
+        .task-list-item.sangat-segera {
+            border-top-color: var(--danger);
+        }
+
+        .task-list-item.completed {
+            border-top-color: #10b981;
+            opacity: 0.85;
+        }
+
+        .task-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .task-list-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            flex: 1;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .task-list-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .task-list-meta {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--gray-800);
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .task-list-desc {
+            color: var(--gray-800);
+            line-height: 1.4;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .task-list-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .status-btn {
+            flex: 1;
+            padding: 0.6rem;
+            border: 2px solid;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .status-btn:hover:not(.active) {
+            background: var(--primary-light) !important;
+            color: var(--primary-dark) !important;
+            border-color: var(--primary-gold) !important;
+            transform: translateY(-2px);
+        }
+
+        .status-inprogress {
+            border-color: var(--warning);
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .status-completed {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+
+        .status-btn.active {
+            background: #10b981 !important;
+            color: white !important;
+            border-color: #10b981 !important;
+        }
+
+            .delete-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            border: none;
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .delete-btn:hover {
+            background: #ef4444;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-grid { 
+                grid-template-columns: 1fr; 
+            }
+            .stats-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+            }
+            .tasks-grid { 
+                grid-template-columns: 1fr; 
+            }
+            .view-toggle { 
+                justify-content: center; 
+            }
+            .main-content {
+                padding: 1rem;
+                margin-left: 95px; /* 🔥 Disesuaikan */
+            }
+            .main-content.sidebar-expanded {
+                margin-left: 340px;
+            }
+        }
+
+        @media (max-width: 1400px) {
+            .main-content.sidebar-expanded {
+                margin-left: 340px; /* 🔥 Kembali ke sidebar normal */
+            }
+        }
+        #progressCircle {
+        stroke: #22c55e;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 0.6s ease;
+}
+    </style>
+    <!-- 🔥 FIREBASE CONNECT -->
+<script type="module">
+    import { tasks, setupRealtimeTasks, saveTask, updateStatus, deleteTaskFirebase } from './firebase-config.js';
+    
+    window.tasks = tasks;
+    window.saveTask = saveTask;
+    window.updateStatus = updateStatus;
+    window.deleteTaskFirebase = deleteTaskFirebase;
+    // Auto sync
+    setupRealtimeTasks(() => {
+        updateStats();
+        renderTasks();
+    });
+</script>
+</head>
+<body>
+    <div class="app-container"> 
+        <!-- 🔥 SIDEBAR - PERFECT LAYOUT -->
+        <div class="sidebar" id="sidebar">
+            <!-- 🔥 HEADER - HAMBURGER + LOGO + MOTIVA -->
+            <div class="sidebar-header">
+                <!-- 🔥 HAMBURGER - ATAS KANAN -->
+                <button class="sidebar-hamburger" id="sidebarHamburger">
+                    <i class="fas fa-bars" id="hamburgerIcon"></i>
+                </button>
+                
+                <!-- 🔥 LOGO + MOTIVA - SEJAJAR FLEX ROW -->
+                <div class="logo-container">
+                    <!-- ✅ LOGO BPSDM - BESAR & SEJAJAR -->
+                    <img src="./LOGO BPSDM.png" 
+                         alt="LOGO BPSDM IMIPAS" 
+                         class="logo-img">
+                    <div class="logo-content">
+                        <h1 class="logo">MOTIVA</h1>
+                        <div class="logo-subtitle">Monitoring Tugas dan Aktivitas</div>
+                    </div>
+                </div>
+
+                <!-- 🔥 GARIS PEMISAH - RAPiH DI BAWAH -->
+                <div class="logo-divider"></div>
+            </div>
+
+            <!-- Nav Items -->
+            <div class="nav-items">
+                <div class="nav-item active" onclick="showSection('dashboard', event)">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="nav-item" onclick="showSection('add-task', event)">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>New Tasks</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <!-- DASHBOARD SECTION -->
+            <div id="dashboard-section" class="section active">
+                <div class="header">
+                    <div class="header-content">
+                        <div>
+                            <h1>Dashboard</h1>
+                            <p>Kelola tugas tim kamu dengan mudah</p>
+                        </div>
+                        <div class="progress-wrapper">
+
+                            <div class="progress-title">
+                                Overall Progress
+                            </div>
+                        
+                            <div class="progress-circle">
+                                <svg width="180" height="180">
+                        
+                                    <!-- Background circle -->
+                                    <circle 
+                                        cx="90" 
+                                        cy="90" 
+                                        r="70"
+                                        stroke="#dcfce7"
+                                        stroke-width="14"
+                                        fill="none"
+                                    />
+                        
+                                    <!-- Progress -->
+                                    <circle 
+                                        id="progressCircle"
+                                        cx="90" 
+                                        cy="90" 
+                                        r="70"
+                                        stroke="url(#gradient)"
+                                        stroke-width="14"
+                                        fill="none"
+                                        stroke-linecap="round"
+                                        stroke-dasharray="439.6"
+                                        stroke-dashoffset="131.88"
+                                        transform="rotate(-90 90 90)"
+                                    />
+                        
+                                    <!-- Gradient -->
+                                    <defs>
+                                        <linearGradient id="gradient">
+                                            <stop offset="0%" stop-color="#60a5fa"/>
+                                            <stop offset="100%" stop-color="#2563eb"/>
+                                        </linearGradient>
+                                    </defs>
+                        
+                                </svg>
+                        
+                                <div class="progress-text">
+                                    <span id="progressPercent">70%</span>
+                                </div>
+                            </div>
+                        
+                            <div class="progress-completed" id="progressCompleted">
+                                1/5 Completed
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-tasks stat-icon"></i>
+                        <div class="stat-number" id="totalTasksCard">0</div>
+                        <div class="stat-label">Total Tugas</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-clock stat-icon"></i>
+                        <div class="stat-number" id="inProgressCount">0</div>
+                        <div class="stat-label">In Progress</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-check-circle stat-icon" style="background: linear-gradient(135deg, #10b981, #059669); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
+                        <div class="stat-number" id="completedCount">0</div>
+                        <div class="stat-label">Selesai</div>
+                    </div>
+                    <!-- 🔥 BIASA -->
+<div class="stat-card">
+    <i class="fas fa-file-alt stat-icon"></i>
+    <div class="stat-number" id="biasaCount">0</div>
+    <div class="stat-label">Biasa</div>
+</div>
+
+<!-- 🔥 SEGERA -->
+<div class="stat-card">
+    <i class="fas fa-exclamation stat-icon"
+       style="background: linear-gradient(135deg, #f59e0b, #d97706);
+       -webkit-background-clip: text;
+       -webkit-text-fill-color: transparent;
+       background-clip: text;">
+    </i>
+
+    <div class="stat-number"
+         style="background: linear-gradient(135deg, #f59e0b, #d97706);
+         -webkit-background-clip: text;
+         -webkit-text-fill-color: transparent;
+         background-clip: text;"
+         id="segeraCount">0</div>
+
+    <div class="stat-label">Segera</div>
+</div>
+                    <div class="stat-card">
+                        <i class="fas fa-bolt stat-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
+                        <div class="stat-number" style="background: linear-gradient(135deg, #ef4444, #dc2626); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;" id="sangatSegeraTasksCount">0</div>
+                        <div class="stat-label">Sangat Segera</div>
+                    </div>
+                </div>
+
+                <div class="task-form-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 800; background: var(--primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0;">
+                            <i class="fas fa-list"></i> Daftar Tugas Terbaru
+                        </h2>
+                        <div class="view-toggle">
+                            <button class="view-btn active" onclick="toggleView('grid', event)" title="Grid View">
+                                <i class="fas fa-th-large"></i>
+                            </button>
+                            <button class="view-btn" onclick="toggleView('list', event)" title="List View">
+                                <i class="fas fa-list"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- GRID VIEW (DEFAULT) -->
+                    <div id="tasksGrid" class="tasks-grid"></div>
+                    
+                    <!-- LIST VIEW -->
+                    <div id="tasksList" class="tasks-list"></div>
+                </div>
+            </div>
+
+            <!-- ADD TASK SECTION -->
+            <div id="add-task-section" class="section">
+                <div class="header">
+                    <div class="header-content">
+                        <div>
+                            <h1>Tambah Tugas Baru</h1>
+                            <p>Buat tugas baru untuk tim</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-form-card">
+                    <form id="taskForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label><i class="fas fa-heading"></i> Judul Tugas <span style="color: var(--primary-gold);">*</span></label>
+                                <input type="text" id="taskTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-calendar-alt"></i> Deadline <span style="color: var(--primary-gold);">*</span></label>
+                                <input type="date" id="taskDeadline" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-file-alt"></i> Sifat Surat <span style="color: var(--primary-gold);">*</span></label>
+                                <select id="taskSifat" required>
+                                    <option value="">Pilih Sifat Surat</option>
+                                    <option value="biasa">BIASA</option>
+                                    <option value="segera">SEGERA</option>
+                                    <option value="sangat-segera">SANGAT SEGERA</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-link"></i> Link Tugas (Opsional)</label>
+                                <input type="text" id="taskLink" placeholder="Masukkan link atau catatan...">
+                            </div>
+                        </div>
+                        
+                        <!-- 🔥 DISPOSISI DROPDOWN -->
+                        <div class="form-group">
+                            <label><i class="fas fa-users"></i> Disposisi <span style="color: var(--primary-gold);">*</span> <span style="color: #64748b; font-weight: 400;">(Pilih satu atau lebih)</span></label>
+                            <div class="disposisi-dropdown">
+                                <div class="disposisi-trigger" onclick="toggleDisposisi()">
+                                    <span id="disposisiSelected" class="disposisi-selected">Klik untuk pilih disposisi...</span>
+                                    <i class="fas fa-chevron-down" id="disposisiArrow"></i>
+                                </div>
+                                <div class="disposisi-list" id="disposisiList">
+                                    <div class="disposisi-item">
+                                        <input type="checkbox" class="disposisi-checkbox" value="Kepala Bagian Umum" id="disp1">
+                                        <label for="disp1" style="flex: 1; cursor: pointer;">Kepala Bagian Umum</label>
+                                    </div>
+                                    <div class="disposisi-item">
+                                        <input type="checkbox" class="disposisi-checkbox" value="Kepala Bagian Perencanaan dan Kerja Sama" id="disp2">
+                                        <label for="disp2" style="flex: 1; cursor: pointer;">Kepala Bagian Perencanaan & Kerja Sama</label>
+                                    </div>
+                                    <div class="disposisi-item">
+                                        <input type="checkbox" class="disposisi-checkbox" value="Kepala Bagian Keuangan" id="disp3">
+                                        <label for="disp3" style="flex: 1; cursor: pointer;">Kepala Bagian Keuangan</label>
+                                    </div>
+                                    <div class="disposisi-item">
+                                        <input type="checkbox" class="disposisi-checkbox" value="Kepala Bagian Data dan Informasi" id="disp4">
+                                        <label for="disp4" style="flex: 1; cursor: pointer;">Kepala Bagian Data & Informasi</label>
+                                    </div>
+                                    <div class="disposisi-item">
+                                        <input type="checkbox" class="disposisi-checkbox" value="Pusat Pelatihan" id="disp5">
+                                        <label for="disp5" style="flex: 1; cursor: pointer;">Pusat Pelatihan</label>
+                                    </div>
+                                    <div class="disposisi-item">
+                                        <input type="checkbox" class="disposisi-checkbox" value="Pusat Pengembangan dan Kompetensi" id="disp6">
+                                        <label for="disp6" style="flex: 1; cursor: pointer;">Pusat Pengembangan & Kompetensi</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-align-left"></i> Deskripsi Tugas</label>
+                            <textarea id="taskDesc" placeholder="Jelaskan detail tugas..."></textarea>
+                        </div>
+                        <button type="submit" class="btn">
+                            <i class="fas fa-plus"></i> Buat Tugas Baru
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tasks from Firebase (auto sync)
+        let currentView = 'grid';
+        let sidebarExpanded = false;
+
+        // 🔥 SIDEBAR TOGGLE
+        document.getElementById('sidebarHamburger').addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleSidebar();
+        });
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const hamburgerIcon = document.getElementById('hamburgerIcon');
+            
+            sidebarExpanded = !sidebarExpanded;
+            
+            if (sidebarExpanded) {
+                sidebar.classList.add('expanded');
+                mainContent.classList.add('sidebar-expanded');
+                hamburgerIcon.style.transform = 'rotate(180deg)';
+            } else {
+                sidebar.classList.remove('expanded');
+                mainContent.classList.remove('sidebar-expanded');
+                hamburgerIcon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', function(e) {
+            if (sidebarExpanded && !document.getElementById('sidebar').contains(e.target)) {
+                toggleSidebar();
+            }
+        });
+
+        function showSection(sectionName, event) {
+        // Hide all sections
+        document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+        // Show target section
+        const targetSection = document.getElementById(sectionName + '-section');
+        if (targetSection) targetSection.classList.add('active');
+        // Activate clicked nav item
+        if (event && event.target) {
+            const clickedNav = event.target.closest('.nav-item');
+            if (clickedNav) clickedNav.classList.add('active');
+        }
+        // Update dashboard if needed
+        if (sectionName === 'dashboard') {
+            updateStats();
+            renderTasks();
+        }
+        }
+
+        function toggleView(viewMode, event) {
+            currentView = viewMode;
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+            
+            if (viewMode === 'grid') {
+                document.getElementById('tasksGrid').style.display = 'grid';
+                document.getElementById('tasksList').style.display = 'none';
+                document.getElementById('tasksList').classList.remove('active');
+                renderGridTasks();
+            } else {
+                document.getElementById('tasksGrid').style.display = 'none';
+                document.getElementById('tasksList').style.display = 'block';
+                document.getElementById('tasksList').classList.add('active');
+                renderListTasks();
+            }
+        }
+
+        // 🔥 DISPOSISI FUNCTIONS
+        function toggleDisposisi() {
+            const trigger = document.querySelector('.disposisi-trigger');
+            const list = document.getElementById('disposisiList');
+            const arrow = document.getElementById('disposisiArrow');
+            
+            trigger.classList.toggle('active');
+            list.classList.toggle('active');
+            arrow.style.transform = list.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        document.addEventListener('click', function(e) {
+            const dropdown = document.querySelector('.disposisi-dropdown');
+            const trigger = document.querySelector('.disposisi-trigger');
+            if (!dropdown.contains(e.target)) {
+                trigger.classList.remove('active');
+                document.getElementById('disposisiList').classList.remove('active');
+                document.getElementById('disposisiArrow').style.transform = 'rotate(0deg)';
+            }
+        });
+
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('disposisi-checkbox')) {
+                updateDisposisiSelected();
+            }
+        });
+
+        function updateDisposisiSelected() {
+            const checkboxes = document.querySelectorAll('.disposisi-checkbox:checked');
+            const selectedSpan = document.getElementById('disposisiSelected');
+            
+            if (checkboxes.length === 0) {
+                selectedSpan.textContent = 'Klik untuk pilih disposisi...';
+            } else if (checkboxes.length === 1) {
+                selectedSpan.textContent = checkboxes[0].value;
+            } else {
+                selectedSpan.textContent = `${checkboxes[0].value} +${checkboxes.length - 1} lainnya`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('dashboard');
+            updateStats();
+            renderGridTasks();
+        });
+
+        function updateStats() {
+            const total = window.tasks.length;
+            const inProgress = window.tasks.filter(t => t.status === 'inprogress').length;
+            const completed = window.tasks.filter(t => t.status === 'completed').length;
+            const biasa = window.tasks.filter(t => t.sifat === 'biasa').length;
+            const segera = window.tasks.filter(t => t.sifat === 'segera').length;
+            const sangatSegera = window.tasks.filter(t => t.sifat === 'sangat-segera').length;
+
+            document.getElementById('totalTasksCard').textContent = total;
+            document.getElementById('inProgressCount').textContent = inProgress;
+            document.getElementById('completedCount').textContent = completed;
+            document.getElementById('biasaCount').textContent = biasa;
+            document.getElementById('segeraCount').textContent = segera;
+            document.getElementById('sangatSegeraTasksCount').textContent = sangatSegera;
+            // 🔥 OVERALL PROGRESS SAFE VERSION
+
+const progressPercent = total > 0
+    ? Math.round((completed / total) * 100)
+    : 0;
+
+// Ambil element
+const progressText = document.getElementById('progressPercent');
+const progressCompleted = document.getElementById('progressCompleted');
+const circle = document.getElementById('progressCircle');
+
+// Update text jika element ada
+if (progressText) {
+    progressText.textContent = progressPercent + '%';
+}
+
+if (progressCompleted) {
+    progressCompleted.textContent =
+        `${completed}/${total} Completed`;
+}
+
+// Update circle jika ada
+if (circle) {
+
+    const radius = 70;
+    const circumference = 2 * Math.PI * radius;
+
+    const offset =
+        circumference -
+        (progressPercent / 100) * circumference;
+
+    circle.style.strokeDasharray = circumference;
+
+    circle.style.strokeDashoffset = offset;
+}
+        }
+
+        function isValidUrl(string) {
+            try {
+                new URL(string.startsWith('http') ? string : 'https://' + string);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+
+        // 🔥 TOOLTIP DISPOSISI
+        function showDisposisiTooltip(element, disposisi) {
+            document.querySelectorAll('.disposisi-tooltip').forEach(t => t.remove());
+            
+            const tooltip = document.createElement('div');
+            tooltip.className = 'disposisi-tooltip';
+            tooltip.innerHTML = disposisi.join('<br>');
+            document.body.appendChild(tooltip);
+            
+            const rect = element.getBoundingClientRect();
+           
+            
+            tooltip.style.top = (rect.bottom + 10) + 'px';
+            tooltip.style.left = rect.left + 'px';
+            tooltip.style.position = 'fixed';
+            
+            setTimeout(() => {
+                tooltip.classList.add('active');
+            }, 10);
+            element._tooltip = tooltip;
+        }
+
+        function hideDisposisiTooltip(element) {
+            const tooltip = element._tooltip;
+            if (tooltip) {
+                tooltip.classList.remove('active');
+                setTimeout(() => {
+                    tooltip.remove();
+                     }, 200);
+            }
+        }
+
+        function renderGridTasks() {
+            const container = document.getElementById('tasksGrid');
+            
+            if (window.tasks.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 6rem 2rem; color: #64748b;">
+                        <i class="fas fa-inbox" style="font-size: 5rem; margin-bottom: 2rem; opacity: 0.3;"></i>
+                        <h3 style="font-size: 2rem; margin-bottom: 1rem; font-weight: 700;">Belum ada tugas</h3>
+                        <p style="font-size: 1.2rem;">Tambahkan tugas pertama kamu!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = window.tasks.slice(0, 12).map((task, index) => {
+                console.log("TASK ID:", task.id);
+                const isOverdue = task.deadline && new Date(task.deadline) < new Date();
+                const sifatClass = task.sifat === 'segera' ? 'segera' : task.sifat === 'sangat-segera' ? 'sangat-segera' : '';
+                const badgeClass = task.sifat === 'biasa' ? 'badge-biasa' : 
+                                  task.sifat === 'segera' ? 'badge-segera' : 'badge-sangat-segera';
+                const badgeText = task.sifat?.toUpperCase() || 'BIASA';
+                const disposisiText = task.disposisi ? (task.disposisi.length === 1 ? task.disposisi[0] : `${task.disposisi[0]} +${task.disposisi.length - 1}`) : '';
+                const isValidLink = task.link ? isValidUrl(task.link) : false;
+
+                return `
+                    <div class="task-card ${sifatClass} ${task.status === 'completed' ? 'completed' : ''}" data-task-index="${index}">
+                        <div class="task-header">
+                            <div>
+                                <div class="task-title">${task.title}</div>
+                                <div class="task-badge ${badgeClass}">${badgeText}</div>
+                            </div>
+                            ${task.status === 'completed' ? '<i class="fas fa-check-circle" style="color: #10b981; font-size: 1.1rem;"></i>' : ''}
+                        </div>
+                        
+                        <div class="task-meta">
+                            ${task.deadline ? `<span><i class="fas fa-calendar"></i> ${new Date(task.deadline).toLocaleDateString('id-ID')}</span>` : '<span><i class="fas fa-infinity"></i> No deadline</span>'}
+                            ${isOverdue ? '<span style="color: #ef4444; font-weight: 700;"><i class="fas fa-clock"></i> TERLAMBAT</span>' : ''}
+                            ${task.link 
+                            ? `<span class="task-link" onclick="event.stopPropagation(); window.open('${task.link.startsWith('http') ? task.link : 'https://' + task.link}', '_blank')">
+                                <i class="fas fa-link"></i> Link
+                            </span>` 
+                            : `<span class="no-link">
+                                <i class="fas fa-unlink"></i> No Link Address
+                            </span>`
+                            }
+                            ${disposisiText ? `<span class="disposisi-meta" data-disposisi='${JSON.stringify(task.disposisi)}' onmouseenter="showDisposisiTooltip(this, JSON.parse(this.dataset.disposisi))" onmouseleave="hideDisposisiTooltip(this)"><i class="fas fa-users"></i> ${disposisiText}</span>` : ''}
+                        </div>
+                        
+                        <div class="task-description">${task.description || 'Tidak ada deskripsi'}</div>
+                        
+                        <div class="task-actions">
+                            <button class="status-btn ${task.status === 'inprogress' ? 'active' : 'status-inprogress'}" onclick="event.stopPropagation(); window.updateStatus('${task.id}', 'inprogress')">
+                                <i class="fas fa-spinner fa-spin"></i> Progress
+                            </button>
+                            <button class="status-btn ${task.status === 'completed' ? 'active' : 'status-completed'}" onclick="event.stopPropagation(); window.updateStatus('${task.id}', 'completed')">
+                                <i class="fas fa-check"></i> Selesai
+                            </button>
+                            <button class="delete-btn" onclick="event.stopPropagation(); deleteTask('${task.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderListTasks() {
+            const container = document.getElementById('tasksList');
+            
+            if (window.tasks.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 6rem 2rem; color: #64748b;">
+                        <i class="fas fa-inbox" style="font-size: 5rem; margin-bottom: 2rem; opacity: 0.3;"></i>
+                        <h3 style="font-size: 2rem; margin-bottom: 1rem; font-weight: 700;">Belum ada tugas</h3>
+                        <p style="font-size: 1.2rem;">Tambahkan tugas pertama kamu!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = window.tasks.slice(0, 12).map((task, index) => {
+                const isOverdue = task.deadline && new Date(task.deadline) < new Date();
+                const sifatClass = task.sifat === 'segera' ? 'segera' : task.sifat === 'sangat-segera' ? 'sangat-segera' : '';
+                const badgeClass = task.sifat === 'biasa' ? 'badge-biasa' : 
+                                  task.sifat === 'segera' ? 'badge-segera' : 'badge-sangat-segera';
+                const badgeText = task.sifat?.toUpperCase() || 'BIASA';
+                const disposisiText = task.disposisi ? (task.disposisi.length === 1 ? task.disposisi[0] : `${task.disposisi[0]} +${task.disposisi.length - 1}`) : '';
+                const isValidLink = task.link ? isValidUrl(task.link) : false;
+
+                return `
+                    <div class="task-list-item ${sifatClass} ${task.status === 'completed' ? 'completed' : ''}" data-task-index="${index}">
+                        <div class="task-list-header">
+                            <div class="task-list-title">${task.title}</div>
+                            <div class="task-list-badge ${badgeClass}">${badgeText}</div>
+                        </div>
+                        
+                        <div class="task-list-meta">
+                            ${task.deadline ? `<span><i class="fas fa-calendar"></i> ${new Date(task.deadline).toLocaleDateString('id-ID')}</span>` : '<span><i class="fas fa-infinity"></i> No deadline</span>'}
+                            ${isOverdue ? '<span style="color: #ef4444; font-weight: 700;"><i class="fas fa-clock"></i> TERLAMBAT!</span>' : ''}
+                            ${task.link 
+                            ? `<span class="task-link" onclick="event.stopPropagation(); window.open('${task.link.startsWith('http') ? task.link : 'https://' + task.link}', '_blank')">
+                                <i class="fas fa-link"></i> Link
+                            </span>` 
+                            : `<span class="no-link">
+                                <i class="fas fa-unlink"></i> No Link Address
+                            </span>`
+                            }
+                            ${disposisiText ? `<span class="disposisi-meta" data-disposisi='${JSON.stringify(task.disposisi)}' onmouseenter="showDisposisiTooltip(this, JSON.parse(this.dataset.disposisi))" onmouseleave="hideDisposisiTooltip(this)"><i class="fas fa-users"></i> ${disposisiText}</span>` : ''}
+                        </div>
+                        
+                        <div class="task-list-desc">${task.description || 'Tidak ada deskripsi'}</div>
+                        
+                        <div class="task-list-actions">
+                            <button class="status-btn ${task.status === 'inprogress' ? 'active' : 'status-inprogress'}" onclick="event.stopPropagation(); window.updateStatus('${task.id}', 'inprogress')">
+                                <i class="fas fa-spinner fa-spin"></i> Progress
+                            </button>
+                            <button class="status-btn ${task.status === 'completed' ? 'active' : 'status-completed'}" onclick="event.stopPropagation(); window.updateStatus('${task.id}', 'completed')">
+                                <i class="fas fa-check"></i> Selesai
+                            </button>
+                            <button class="delete-btn" onclick="event.stopPropagation(); deleteTask('${task.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderTasks() {
+            if (currentView === 'grid') {
+                renderGridTasks();
+            } else {
+                renderListTasks();
+            }
+        }
+
+        async function deleteTask(taskId) {
+        if (!confirm("Yakin mau hapus tugas ini?")) return;
+        await deleteTaskFirebase(taskId);
+        }
+
+        
+
+        document.getElementById('taskForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const disposisiCheckboxes = document.querySelectorAll('.disposisi-checkbox:checked');
+    const disposisi = Array.from(disposisiCheckboxes).map(cb => cb.value);
+    
+    if (disposisi.length === 0) {
+        alert('Disposisi wajib dipilih!');
+        return;
+    }
+    
+    const newTask = {
+        title: document.getElementById('taskTitle').value,
+        description: document.getElementById('taskDesc').value || '',
+        deadline: document.getElementById('taskDeadline').value || null,
+        sifat: document.getElementById('taskSifat').value,
+        link: document.getElementById('taskLink').value || null,
+        disposisi: disposisi,
+        status: 'inprogress'
+    };
+
+    const success = await window.saveTask(newTask);  // ← FIREBASE!
+    
+    if (success) {
+        this.reset();
+        document.querySelector('.disposisi-trigger').classList.remove('active');
+        document.getElementById('disposisiList').classList.remove('active');
+        document.getElementById('disposisiArrow').style.transform = 'rotate(0deg)';
+        document.getElementById('disposisiSelected').textContent = 'Klik untuk pilih disposisi...';
+        
+        showSection('dashboard');
+        // Success animation...
+    }
+});
+    </script>
+</body>
+</html>
